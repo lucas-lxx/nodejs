@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "back-node-max",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
