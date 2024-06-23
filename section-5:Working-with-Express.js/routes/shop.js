@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/', (req, res, next) => {
   const products = admin_data.products;
-  res.render('shop', {products, doc_title: 'Shop'});
+  res.render('shop', {products});
 })
 
 module.exports = router;
