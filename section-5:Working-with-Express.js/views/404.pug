@@ -1,0 +1,10 @@
+extends layouts/header-layout.pug
+
+block styles 
+  link(rel="stylesheet", href="/css/error.css")
+
+block content 
+  main.main-error 
+    .error-control 
+      h1 Error! 
+      img(src="https://http.cat/404", style="width: 400")

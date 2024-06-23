@@ -1,20 +1,17 @@
-const path = require('path');
-
 const express = require('express');
-
-const { views_dir_path } = require('../util/path');
 
 const router = express.Router();
 
 const products = [];
 
 router.get('/add-product', (req, res, next) => {
-  res.sendFile(path.join(views_dir_path, 'add-product.html'));
+  res.render('add-product');
 })
 
 router.post('/product', (req, res, next) => {
   products.push({title: req.body.title});
-  res.redirect('/');
+  console.log('routes/admin.js', 'products:', products)
+  res.redirect('/shop');
 })
 
 exports.router = router;

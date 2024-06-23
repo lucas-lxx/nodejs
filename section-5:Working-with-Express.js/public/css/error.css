@@ -10,6 +10,11 @@
   flex-direction: column;
 }
 
+.error-control img {
+  width: 25rem;
+  height: auto;
+}
+
 .error-control img,
 .error-control h1 {
   display: block;
