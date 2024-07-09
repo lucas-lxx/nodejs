@@ -1,1 +1,12 @@
-.home-list {}
+.home-main {
+  display: flex;
+  justify-content: center;
+}
+
+.home-main__title {
+  font-size: 5rem;
+}
+
+.home-main__description {
+  font-size: 2rem;
+}

@@ -4,6 +4,11 @@
   margin: auto;
 }
 
+.product-item {
+  width: 20rem;
+  max-width: 95%;
+}
+
 .form-control {
   margin: 1rem 0;
 }
