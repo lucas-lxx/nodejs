@@ -1,7 +1,7 @@
 const express = require('express');
 const body_parser = require('body-parser')
 
-const admin_router = require('./routes/admin').router;
+const admin_router = require('./routes/admin');
 const shop_router = require('./routes/shop');
 const home_router = require('./routes/home');
 const route_not_found = require('./routes/404');
