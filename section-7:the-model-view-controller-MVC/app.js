@@ -4,7 +4,7 @@ const body_parser = require('body-parser')
 const admin_router = require('./routes/admin');
 const shop_router = require('./routes/shop');
 const home_router = require('./routes/home');
-const route_not_found = require('./routes/404');
+const errorController = require('./controllers/error');
 const { public_dir_path } = require('./util/path');
 
 const port = 3000;
@@ -19,6 +19,6 @@ app.use(express.static(public_dir_path));
 app.use('/admin', admin_router);
 app.use('/shop', shop_router);
 app.use(home_router);
-app.use(route_not_found);
+app.use(errorController.get404);
 
 app.listen(port, '0.0.0.0');
