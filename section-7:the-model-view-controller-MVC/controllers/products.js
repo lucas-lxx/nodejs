@@ -20,4 +20,4 @@ exports.getProducts = (req, res, next) => {
   });
 };
 
-module.exports = products;
+exports.products = products;
