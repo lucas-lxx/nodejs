@@ -10,12 +10,12 @@ const p = path.join(
 );
 
 const getProductFromFile = (cb) => {
-    fs.readFile(p, (err, fileContent) => {
-      if (err) {
-        return cb([]);
-      }
-      return cb(JSON.parse(fileContent));
-    });
+  fs.readFile(p, (err, fileContent) => {
+    if (err) {
+      return cb([]);
+    }
+    return cb(JSON.parse(fileContent));
+  });
 };
 
 module.exports = class Product{
