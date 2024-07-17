@@ -2,7 +2,7 @@ const express = require('express');
 const body_parser = require('body-parser')
 
 const admin_router = require('./routes/admin');
-const shop_router = require('./routes/shop');
+const shop_router = require('./routes/products');
 const home_router = require('./routes/home');
 const errorController = require('./controllers/error');
 const { public_dir_path } = require('./util/path');
@@ -17,7 +17,7 @@ app.use(body_parser.urlencoded({extended: true}));
 app.use(express.static(public_dir_path));
 
 app.use('/admin', admin_router);
-app.use('/shop', shop_router);
+app.use('/products', shop_router);
 app.use(home_router);
 app.use(errorController.get404);
 
