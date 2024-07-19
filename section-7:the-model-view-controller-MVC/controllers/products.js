@@ -22,3 +22,13 @@ exports.getProducts = (req, res, next) => {
     });
   });
 };
+
+exports.getAdminProducts = (req, res, next) => {
+  Product.fetchAll((products) => {
+    res.render('admin/products', {
+      products,
+      pageTitle: 'Product Panel',
+      path: req.originalUrl
+    });
+  })
+};
