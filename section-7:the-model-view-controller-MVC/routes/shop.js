@@ -1,16 +1,14 @@
-const express = require('express');
+const router = require('express').Router();
 
-const admin_data = require('./admin');
+const shopController = require('../controllers/shop');
+const productsController = require('../controllers/products');
 
-const router = express.Router();
+router.get('/', shopController.getHome);
 
-router.get('/', (req, res, next) => {
-  const products = admin_data.products;
-  res.render('shop', {
-    products, 
-    pageTitle: 'CatShop.com',
-    path: req.originalUrl
-  });
-})
+router.get('/products', productsController.getProducts);
+
+router.get('/cart', shopController.getCart);
+
+router.get('/checkout', shopController.getCheckout);
 
 module.exports = router;
