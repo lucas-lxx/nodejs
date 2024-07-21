@@ -32,3 +32,8 @@ exports.getAdminProducts = (req, res, next) => {
     });
   })
 };
+
+exports.deleteByTitle = (req, res, next) => {
+  Product.deleteByTitle(req.params.title);
+  res.status(204).end();
+}

@@ -32,6 +32,16 @@ module.exports = class Product{
     });
   };
 
+  static deleteByTitle(title) {
+    getProductFromFile((products) => {
+      const allProducts = products;
+      const filteredProducts = allProducts.filter(product => product.title !== title);
+      fs.writeFile(p, JSON.stringify(filteredProducts), (err) => {
+        console.log(err);
+      });
+    });
+  };
+
   static fetchAll(cb) {
     getProductFromFile(cb);
   };
