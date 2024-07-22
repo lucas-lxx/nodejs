@@ -19,8 +19,11 @@ const getProductFromFile = (cb) => {
 };
 
 module.exports = class Product{
-  constructor(title) {
+  constructor(title, imageUrl, description, price) {
     this.title = title;
+    this.imageUrl = imageUrl;
+    this.description = description;
+    this.price = price;
   }
 
   save() {
@@ -28,7 +31,17 @@ module.exports = class Product{
       products.push(this);
       fs.writeFile(p, JSON.stringify(products), (err) => {
         console.log(err);
-      })
+      });
+    });
+  };
+
+  static deleteByTitle(title) {
+    getProductFromFile((products) => {
+      const allProducts = products;
+      const filteredProducts = allProducts.filter(product => product.title !== title);
+      fs.writeFile(p, JSON.stringify(filteredProducts), (err) => {
+        console.log(err);
+      });
     });
   };
 
