@@ -8,13 +8,21 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
-  if (req.body.title < 1) {
-    res.redirect('/admin/add-product');
-    return;
+  const { title, imageUrl, description, price } = req.body;
+  const fields = { title, imageUrl, description, price };
+  let invalidFieldSize = false;
+  for (const [key, value] of Object.entries(fields)) {
+    if (value.length < 1) {
+      invalidFieldSize = true;
+    }
   }
-  const product = new Product(req.body.title);
-  product.save();
-  res.redirect('/products');
+  if (invalidFieldSize) {
+    res.redirect('/admin/add-product');
+  } else {
+    const product = new Product(title, imageUrl, description, price);
+    product.save();
+    res.redirect('/products');
+  }
 };
 
 exports.getProducts = (req, res, next) => {
