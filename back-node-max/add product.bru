@@ -1,0 +1,23 @@
+meta {
+  name: add product
+  type: http
+  seq: 4
+}
+
+post {
+  url: 192.168.1.79:3000/admin/product
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title": "asdf"
+  }
+}
+
+body:text {
+  {
+    "title": "asdf"
+  }
+}
