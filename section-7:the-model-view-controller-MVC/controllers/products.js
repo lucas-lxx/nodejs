@@ -8,6 +8,10 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
+  if (req.body.title < 1) {
+    res.redirect('/admin/add-product');
+    return;
+  }
   const product = new Product(req.body.title);
   product.save();
   res.redirect('/products');
