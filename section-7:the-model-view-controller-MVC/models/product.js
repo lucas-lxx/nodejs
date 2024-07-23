@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 const projectPath = require('../util/path');
 
@@ -20,6 +21,7 @@ const getProductFromFile = (cb) => {
 
 module.exports = class Product{
   constructor(title, imageUrl, description, price) {
+    this.uuid = crypto.randomUUID();
     this.title = title;
     this.imageUrl = imageUrl;
     this.description = description;
