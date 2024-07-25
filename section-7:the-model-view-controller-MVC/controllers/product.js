@@ -9,9 +9,9 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const { title, imageUrl, description, price } = req.body;
-  const fields = { title, imageUrl, description, price };
+  const requiredFields = { title, description, price };
   let invalidFieldSize = false;
-  for (const [key, value] of Object.entries(fields)) {
+  for (const [key, value] of Object.entries(requiredFields)) {
     if (value.length < 1) {
       invalidFieldSize = true;
     }

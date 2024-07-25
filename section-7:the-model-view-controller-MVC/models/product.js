@@ -24,6 +24,7 @@ module.exports = class Product{
     this.uuid = crypto.randomUUID();
     this.title = title;
     this.imageUrl = imageUrl;
+    if (!imageUrl) this.imageUrl = 'https://preview.redd.it/toea7o9mmk481.jpg?width=1080&crop=smart&auto=webp&s=ff47ea91395dacbc8eb8a214a63d7f1d3e1b307a';
     this.description = description;
     this.price = price;
   }
