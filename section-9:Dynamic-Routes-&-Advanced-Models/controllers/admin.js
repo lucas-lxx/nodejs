@@ -2,8 +2,8 @@ const Product = require('../models/product');
 
 exports.getAddProduct = (req, res, next) => {
   res.render('admin/add-product', {
-    pageTitle: 'Add Product',
-    path: '/admin/add-product',
+    pageTitle: 'CatShop Admin', 
+    path: req.originalUrl,
     formsCSS: true,
     productCSS: true,
     activeAddProduct: true
@@ -11,21 +11,34 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
-  const title = req.body.title;
-  const imageUrl = req.body.imageUrl;
-  const price = req.body.price;
-  const description = req.body.description;
-  const product = new Product(title, imageUrl, description, price);
-  product.save();
-  res.redirect('/');
+  const { title, imageUrl, description, price } = req.body;
+  const requiredFields = { title, description, price };
+  let invalidFieldSize = false;
+  for (const [key, value] of Object.entries(requiredFields)) {
+    if (value.length < 1) {
+      invalidFieldSize = true;
+    }
+  }
+  if (invalidFieldSize) {
+    res.redirect('/admin/add-product');
+  } else {
+    const product = new Product(title, imageUrl, description, price);
+    product.save();
+    res.redirect('/products');
+  }
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll(products => {
+  Product.fetchAll((products) => {
     res.render('admin/products', {
-      prods: products,
-      pageTitle: 'Admin Products',
-      path: '/admin/products'
+      products,
+      pageTitle: 'Product Panel',
+      path: req.originalUrl
     });
-  });
+  })
 };
+
+exports.deleteByTitle = (req, res, next) => {
+  Product.deleteByTitle(req.params.title);
+  res.status(204).end();
+}

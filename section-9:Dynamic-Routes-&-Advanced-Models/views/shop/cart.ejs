@@ -1,6 +1,13 @@
 <%- include('../includes/head.ejs') %>
-    </head>
-
-    <body>
-        <%- include('../includes/navigation.ejs') %>
-        <%- include('../includes/end.ejs') %>
+  <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+  <%- include('../includes/navigation.ejs') %>
+  <main class="home-main">
+    <div class="home-main__card">
+      <h1 class="home-main__title">COMPRE BOTINIIIII!</h1>
+      <p class="home-main__description">Aqui é seguro comprar!</p>
+      <a href="/checkout" style="text-decoration: none;"><small>checkout</small></a>
+    </div>
+  </main>
+<%- include('../includes/end.ejs') %>

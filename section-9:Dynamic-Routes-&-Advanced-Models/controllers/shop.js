@@ -1,42 +1,39 @@
 const Product = require('../models/product');
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll(products => {
+  Product.fetchAll((products) => {
     res.render('shop/product-list', {
-      prods: products,
-      pageTitle: 'All Products',
-      path: '/products'
+      products, 
+      pageTitle: 'CatShop.com',
+      path: req.originalUrl
     });
   });
 };
 
-exports.getIndex = (req, res, next) => {
-  Product.fetchAll(products => {
-    res.render('shop/index', {
-      prods: products,
-      pageTitle: 'Shop',
-      path: '/'
-    });
+exports.getHome = (req, res, next) => {
+  res.render('shop/index', {
+    pageTitle: 'CatShop.com', 
+    path: req.originalUrl
   });
-};
+}
 
 exports.getCart = (req, res, next) => {
   res.render('shop/cart', {
-    path: '/cart',
-    pageTitle: 'Your Cart'
-  });
-};
-
-exports.getOrders = (req, res, next) => {
-  res.render('shop/orders', {
-    path: '/orders',
-    pageTitle: 'Your Orders'
+    pageTitle: 'CatShop Cart',
+    path: req.originalUrl
   });
 };
 
 exports.getCheckout = (req, res, next) => {
   res.render('shop/checkout', {
-    path: '/checkout',
-    pageTitle: 'Checkout'
+    pageTitle: 'CatShop Checkout',
+    path: req.originalUrl
+  });
+};
+
+exports.getOrders = (req, res, next) => {
+  res.render('shop/orders', {
+    pageTitle: 'CatShop Orders',
+    path: req.originalUrl
   });
 };
