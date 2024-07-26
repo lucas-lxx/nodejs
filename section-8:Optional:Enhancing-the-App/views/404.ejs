@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= pageTitle %></title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/error.css">
+</head>
+<body>
+  <%- include('includes/navigation.ejs')%>
+  <main class="main-error">
+    <div class="error-control">
+      <h1>Error!</h1>
+      <img src="https://http.cat/404" style="width: 400px; height: auto;"></img>
+    </div>
+  </main>
+<%- include('includes/end.ejs') %>

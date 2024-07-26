@@ -1,0 +1,21 @@
+.main-error {
+  display: flex;
+  height: 1000px;
+  justify-content: center;
+}
+
+.error-control {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.error-control img {
+  width: 25rem;
+  height: auto;
+}
+
+.error-control img,
+.error-control h1 {
+  display: block;
+}
