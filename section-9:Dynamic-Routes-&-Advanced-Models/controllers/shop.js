@@ -10,6 +10,12 @@ exports.getProducts = (req, res, next) => {
   });
 };
 
+exports.getProduct = (req, res, next) => {
+  const productUuid = req.params.uuid;
+  console.log(productUuid);
+  res.status(200).redirect('/products');
+}
+
 exports.getHome = (req, res, next) => {
   res.render('shop/index', {
     pageTitle: 'CatShop.com', 
