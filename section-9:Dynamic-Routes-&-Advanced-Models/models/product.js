@@ -10,7 +10,7 @@ const p = path.join(
   'products.json'
 );
 
-const getProductFromFile = (cb) => {
+const getProductsFromFile = (cb) => {
   fs.readFile(p, (err, fileContent) => {
     if (err) {
       return cb([]);
@@ -30,7 +30,7 @@ module.exports = class Product{
   }
 
   save() {
-    getProductFromFile((products) => {
+    getProductsFromFile((products) => {
       products.push(this);
       fs.writeFile(p, JSON.stringify(products), (err) => {
         console.log(err);
@@ -39,7 +39,7 @@ module.exports = class Product{
   };
 
   static deleteByTitle(title) {
-    getProductFromFile((products) => {
+    getProductsFromFile((products) => {
       const allProducts = products;
       const filteredProducts = allProducts.filter(product => product.title !== title);
       fs.writeFile(p, JSON.stringify(filteredProducts), (err) => {
@@ -49,6 +49,13 @@ module.exports = class Product{
   };
 
   static fetchAll(cb) {
-    getProductFromFile(cb);
+    getProductsFromFile(cb);
   };
+
+  static findById(id, cb) {
+    getProductsFromFile(products => {
+      const product = products.find(p => p.uuid === id);
+      cb(product);
+    })
+  }
 };
