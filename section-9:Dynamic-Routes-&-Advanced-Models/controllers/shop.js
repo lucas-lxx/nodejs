@@ -5,43 +5,55 @@ exports.getProducts = (req, res, next) => {
     res.render('shop/product-list', {
       products, 
       pageTitle: 'CatShop.com',
-      path: req.originalUrl
+      path: '/products'
     });
   });
 };
 
 exports.getProduct = (req, res, next) => {
-  const productUuid = req.params.uuid;
+  const productUuid = req.params.productUuid;
   Product.findById(productUuid, product => {
-    console.log(product);
+    res.render('shop/product-details', {
+      product,
+      pageTitle: product.title,
+      path: '/products'
+    });
   });
-  res.status(200).redirect('/products');
 }
 
 exports.getHome = (req, res, next) => {
-  res.render('shop/index', {
-    pageTitle: 'CatShop.com', 
-    path: req.originalUrl
-  });
+  Product.fetchAll( products => {
+    res.render('shop/index', {
+      products,
+      pageTitle: 'CatShop.com', 
+      path: '/'
+    });}
+  );
 }
 
 exports.getCart = (req, res, next) => {
   res.render('shop/cart', {
     pageTitle: 'CatShop Cart',
-    path: req.originalUrl
+    path: '/cart'
   });
 };
+
+exports.postCart = (req, res, next) => {
+  const productUuid = req.body.productUuid
+  console.log(productUuid);
+  res.redirect(`/products/${productUuid}`);
+}
 
 exports.getCheckout = (req, res, next) => {
   res.render('shop/checkout', {
     pageTitle: 'CatShop Checkout',
-    path: req.originalUrl
+    path: '/checkout'
   });
 };
 
 exports.getOrders = (req, res, next) => {
   res.render('shop/orders', {
     pageTitle: 'CatShop Orders',
-    path: req.originalUrl
+    path: '/orders'
   });
 };

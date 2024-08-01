@@ -9,4 +9,9 @@
       <p class="home-main__description">The best cat shop that you can find!</p>
     </div>
   </main>
+  <div class="grid">
+    <% if (products.length > 0) { %>
+      <%- include('../components/product-card.ejs', {products}) %>
+    <% } %>
+  </div>
 <%- include('../includes/end.ejs') %>
