@@ -3,7 +3,7 @@ const Product = require('../models/product');
 exports.getAddProduct = (req, res, next) => {
   res.render('admin/add-product', {
     pageTitle: 'CatShop Admin', 
-    path: req.originalUrl,
+    path: '/admin/add-product',
     formsCSS: true,
     productCSS: true,
     activeAddProduct: true
@@ -33,7 +33,7 @@ exports.getProducts = (req, res, next) => {
     res.render('admin/products', {
       products,
       pageTitle: 'Product Panel',
-      path: req.originalUrl
+      path: '/admin/products'
     });
   })
 };
