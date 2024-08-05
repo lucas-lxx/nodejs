@@ -15,7 +15,7 @@
     </div>
     <div class="card__actions">
 
-      <% if(path === '/products') { %>
+      <% if(!path.match(new RegExp("^/admin.*"))) { %>
         <a class="btn" href=<%= "/products/" + product.uuid %>>Details</a>
         <%- include('../includes/add-to-cart.ejs', {product}) %>
       <% }; %>
