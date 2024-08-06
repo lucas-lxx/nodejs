@@ -20,8 +20,8 @@ const getProductsFromFile = (cb) => {
 };
 
 module.exports = class Product{
-  constructor(title, imageUrl, description, price) {
-    this.uuid = crypto.randomUUID();
+  constructor(title, imageUrl, description, price, uuid=null) {
+    this.uuid = uuid;
     this.title = title;
     this.imageUrl = imageUrl;
     if (!imageUrl) this.imageUrl = 'https://preview.redd.it/toea7o9mmk481.jpg?width=1080&crop=smart&auto=webp&s=ff47ea91395dacbc8eb8a214a63d7f1d3e1b307a';
@@ -31,7 +31,15 @@ module.exports = class Product{
 
   save() {
     getProductsFromFile((products) => {
-      products.push(this);
+      if (this.uuid === null) {
+        this.uuid = crypto.randomUUID();
+        products.push(this);
+        console.log('Create Product');
+      } else {
+        const productUpdateIndex = products.findIndex(product => product.uuid === this.uuid);
+        products[productUpdateIndex] = this;
+        console.log('Update Product');
+      }
       fs.writeFile(p, JSON.stringify(products), (err) => {
         console.log(err);
       });
