@@ -1,12 +1,10 @@
 const Product = require('../models/product');
 
 exports.getAddProduct = (req, res, next) => {
-  res.render('admin/add-product', {
-    pageTitle: 'CatShop Admin', 
+  res.render('admin/edit-product', {
+    pageTitle: 'Add Product', 
     path: '/admin/add-product',
-    formsCSS: true,
-    productCSS: true,
-    activeAddProduct: true
+    edit: false
   });
 };
 
@@ -26,6 +24,23 @@ exports.postAddProduct = (req, res, next) => {
     product.save();
     res.redirect('/products');
   }
+};
+
+exports.getEditProduct = (req, res, next) => {
+  const edit = req.query.edit;
+  const productId = req.params.productId;
+  Product.findById(productId, (product) => {
+    if (!product) {
+      console.log('No product Found!');
+      return res.redirect('error');
+    }
+    res.render('admin/edit-product', {
+      pageTitle: 'Edit Product', 
+      path: '/admin/edit-product',
+      edit: edit,
+      product
+    });
+  });
 };
 
 exports.getProducts = (req, res, next) => {
