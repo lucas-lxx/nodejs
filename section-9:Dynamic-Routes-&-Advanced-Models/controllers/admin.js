@@ -29,6 +29,9 @@ exports.postAddProduct = (req, res, next) => {
 exports.getEditProduct = (req, res, next) => {
   const edit = req.query.edit;
   const productId = req.params.productId;
+  if (!edit) {
+    return res.redirect('/');
+  }
   Product.findById(productId, (product) => {
     if (!product) {
       console.log('No product Found!');
@@ -69,6 +72,13 @@ exports.getProducts = (req, res, next) => {
     });
   })
 };
+
+exports.postDeleteProduct = (req, res, next) => {
+  const ProductUuid = req.body.productId;
+  console.log(ProductUuid);
+  Product.deleteById(ProductUuid);
+  res.redirect('/admin/products');
+}
 
 exports.deleteByTitle = (req, res, next) => {
   Product.deleteByTitle(req.params.title);
