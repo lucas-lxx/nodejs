@@ -18,7 +18,7 @@
       <a class="btn" href="/products/<%= product.id %>">Details</a>
       <form action="/cart/delete-product" method="POST">
         <button class="btn" type="submit">Delete</button>
-        <input type="hidden" name="productId" value="<%= product.uuid %>">
+        <input type="hidden" name="productId" value="<%= product.id %>">
       </form>
     </div>
   </div>

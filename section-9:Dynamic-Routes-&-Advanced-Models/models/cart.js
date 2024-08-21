@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const projectPath = require('../util/path');
+const Product = require('./product');
 
 cart_path = path.join(
   projectPath.data_dir_path,
@@ -33,5 +34,22 @@ module.exports = class Cart {
 
   static fetchAll(cb) {
     getCart(cb);
+  }
+
+  static deleteById(id, cb) {
+    getCart(cart => {
+      const deletedProductIndex = cart.products.findIndex(product => product.id === id);
+      const deletedProductQty = cart.products[deletedProductIndex].qty;
+      Product.findById(id, product => {
+        const deletedProductPrice = product.price;
+        console.log(typeof(cart.totalPrice), typeof(+deletedProductPrice));
+        cart.totalPrice = ((cart.totalPrice * 100) - ((deletedProductQty * 100) * +deletedProductPrice)) / 100;
+        cart.products.splice(deletedProductIndex, 1);
+        fs.writeFile(cart_path, JSON.stringify(cart, null, "\t"), (err) => {
+          if (err) { console.log(err) }
+          cb();
+        });
+      })
+    });
   }
 }

@@ -52,6 +52,13 @@ exports.postCart = (req, res, next) => {
   res.redirect(`/products/${productUuid}`);
 }
 
+exports.postCartDeleteProduct = (req, res, next) => {
+  const productId = req.body.productId;
+  Cart.deleteById(productId, () => {
+    res.redirect('/cart');
+  });
+}
+
 exports.getCheckout = (req, res, next) => {
   res.render('shop/checkout', {
     pageTitle: 'CatShop Checkout',
