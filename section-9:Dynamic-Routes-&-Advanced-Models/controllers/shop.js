@@ -47,9 +47,8 @@ exports.postCart = (req, res, next) => {
   const productUuid = req.body.productUuid
   Product.findById(productUuid, product => {
     Cart.addProduct(product.uuid, product.price);
+    res.redirect('/cart');
   })
-
-  res.redirect(`/products/${productUuid}`);
 }
 
 exports.postCartDeleteProduct = (req, res, next) => {

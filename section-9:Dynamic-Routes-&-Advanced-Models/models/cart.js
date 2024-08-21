@@ -12,7 +12,7 @@ cart_path = path.join(
 const getCart = (cb) => {
   fs.readFile(cart_path, (err, cart) => {
     if (err) {
-      return cb({products: [], totalPrice: 0});
+      return cb({products: [], totalPrice: +0});
     }
     return cb(JSON.parse(cart));
   });
@@ -24,11 +24,14 @@ module.exports = class Cart {
       const existingProduct = cart.products.find(product => product.id === id);
       if (existingProduct) {
         existingProduct.qty += 1;
+      } else {
+        const productAdded = {id: id, qty: 1};
+        cart.products.push(productAdded);
       } 
-      const productAdded = {id: id, qty: 1};
-      cart.products.push(productAdded);
-      cart.totalPrice += price;
-      return JSON.stringify(cart, null, "\t");
+      cart.totalPrice = ((cart.totalPrice * 100) + (price * 100)) / 100;
+      fs.writeFile(cart_path, JSON.stringify(cart, null, "\t"), (err) => {
+        if (err) { console.log(err) }
+      });
     });
   };
 
