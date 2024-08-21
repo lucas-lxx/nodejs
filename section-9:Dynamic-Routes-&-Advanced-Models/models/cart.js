@@ -8,24 +8,30 @@ cart_path = path.join(
   'cart.json'
 );
 
+const getCart = (cb) => {
+  fs.readFile(cart_path, (err, cart) => {
+    if (err) {
+      return cb({products: [], totalPrice: 0});
+    }
+    return cb(JSON.parse(cart));
+  });
+};
+
 module.exports = class Cart {
   static addProduct(id, price) {
-    fs.readFile(cart_path, (err, fileContent) => {
-      let cart = {products:[], totalPrice: 0};
-      if (!err) {
-        cart = JSON.parse(fileContent);
-      }
+    getCart(cart => {
       const existingProduct = cart.products.find(product => product.id === id);
-      let updatedProduct = {id: id, qty: 1};
       if (existingProduct) {
         existingProduct.qty += 1;
-      } else {
-        cart.products = [...cart.products, updatedProduct];
-      }
-      cart.totalPrice += parseInt(price);
-      fs.writeFile(cart_path, JSON.stringify(cart), (err) => {
-        console.log(err);
-      });
-    })
+      } 
+      const productAdded = {id: id, qty: 1};
+      cart.products.push(productAdded);
+      cart.totalPrice += price;
+      return JSON.stringify(cart, null, "\t");
+    });
+  };
+
+  static fetchAll(cb) {
+    getCart(cb);
   }
 }
