@@ -11,6 +11,10 @@
   margin: 1rem;
 }
 
+.product-item__cart {
+  display: flex;
+}
+
 .product__title {
   font-size: 1.2rem;
   text-align: center;

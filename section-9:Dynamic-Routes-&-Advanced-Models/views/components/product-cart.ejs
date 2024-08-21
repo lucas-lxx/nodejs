@@ -1,0 +1,25 @@
+<% products.forEach(product => { %>
+  <div class="card product-item__cart">
+    <header class="card__header">
+      <h1 class="product__title"><%= product.title%></h1>
+    </header>
+    <div class="card__image">
+      <img 
+        src="<%= product.imageUrl%>" 
+        alt="A cat"
+      >
+    </div>
+    <div class="card__content">
+      <h2 class="product__price">R$ <%= product.price %></h2>
+      <p class="product__description"><%= product.description %></p>
+      <p class="product__description"><%= product.qty %></p>
+    </div>
+    <div class="card__actions">
+      <a class="btn" href="/products/<%= product.id %>">Details</a>
+      <form action="/cart/delete-product" method="POST">
+        <button class="btn" type="submit">Delete</button>
+        <input type="hidden" name="productId" value="<%= product.uuid %>">
+      </form>
+    </div>
+  </div>
+<% }); %>
