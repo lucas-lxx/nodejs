@@ -40,7 +40,7 @@ module.exports = class Product{
         products[productUpdateIndex] = this;
         console.log('Update Product');
       }
-      fs.writeFile(p, JSON.stringify(products), (err) => {
+      fs.writeFile(p, JSON.stringify(products, null, "\t"), (err) => {
         console.log(err);
       });
     });
@@ -52,7 +52,7 @@ module.exports = class Product{
         return console.log('No products FromFile!');
       }
       const filteredProducts = products.filter(product => product.uuid !== uuid);
-      fs.writeFile(p, JSON.stringify(filteredProducts), (err) => {
+      fs.writeFile(p, JSON.stringify(filteredProducts, null, "\t"), (err) => {
         if (!err) {
 
         } else {
@@ -66,7 +66,7 @@ module.exports = class Product{
     getProductsFromFile((products) => {
       const allProducts = products;
       const filteredProducts = allProducts.filter(product => product.title !== title);
-      fs.writeFile(p, JSON.stringify(filteredProducts), (err) => {
+      fs.writeFile(p, JSON.stringify(filteredProducts, null, "\t"), (err) => {
         console.log(err);
       });
     });
