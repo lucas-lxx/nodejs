@@ -12,6 +12,12 @@ module.exports = class Product{
   }
 
   save() {
+    this.id = crypto.randomUUID();
+    return db.execute(`
+      INSERT INTO products (id, title, price, description, image_url)
+      VALUES (?, ?, ?, ?, ?);
+    `,
+    [this.id, this.title, this.price, this.description, this.image_url]);
   };
 
   static deleteById(id) {

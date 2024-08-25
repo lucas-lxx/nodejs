@@ -21,8 +21,9 @@ exports.postAddProduct = (req, res, next) => {
     res.redirect('/admin/add-product');
   } else {
     const product = new Product(title, imageUrl, description, price);
-    product.save();
-    res.redirect('/products');
+    product.save()
+    .then(() => { res.redirect('/products'); })
+    .catch(err => { console.log(err); });
   }
 };
 
