@@ -1,23 +1,6 @@
-const fs = require('fs');
-const path = require('path');
 const crypto = require('crypto');
 
-const projectPath = require('../util/path');
-
-const p = path.join(
-  projectPath.root_dir_path, 
-  'data', 
-  'products.json'
-);
-
-const getProductsFromFile = (cb) => {
-  fs.readFile(p, (err, fileContent) => {
-    if (err) {
-      return cb([]);
-    }
-    return cb(JSON.parse(fileContent));
-  });
-};
+const db = require('../util/database');
 
 module.exports = class Product{
   constructor(title, image_url, description, price) {
@@ -29,56 +12,21 @@ module.exports = class Product{
   }
 
   save() {
-    getProductsFromFile((products) => {
-      if (this.uuid === null) {
-        this.uuid = crypto.randomUUID();
-        products.push(this);
-        console.log('Create Product');
-      } else {
-        const productUpdateIndex = products.findIndex(product => product.uuid === this.uuid);
-        products[productUpdateIndex] = this;
-        console.log('Update Product');
-      }
-      fs.writeFile(p, JSON.stringify(products, null, "\t"), (err) => {
-        console.log(err);
-      });
-    });
   };
 
-  static deleteById(uuid) {
-    getProductsFromFile((products) => {
-      if (!products) {
-        return console.log('No products FromFile!');
-      }
-      const filteredProducts = products.filter(product => product.uuid !== uuid);
-      fs.writeFile(p, JSON.stringify(filteredProducts, null, "\t"), (err) => {
-        if (!err) {
-
-        } else {
-          console.log(err);
-        }
-      });
-    });
+  static deleteById(id) {
   };
 
   static deleteByTitle(title) {
-    getProductsFromFile((products) => {
-      const allProducts = products;
-      const filteredProducts = allProducts.filter(product => product.title !== title);
-      fs.writeFile(p, JSON.stringify(filteredProducts, null, "\t"), (err) => {
-        console.log(err);
-      });
-    });
   };
 
-  static fetchAll(cb) {
-    getProductsFromFile(cb);
-  };
-
-  static findById(id, cb) {
-    getProductsFromFile(products => {
-      const product = products.find(p => p.uuid === id);
-      cb(product);
-    })
+  static fetchAll() {
+    return db.execute(`
+      SELECT *
+      FROM products;
+    `);
+  }
+  
+  static findById(id) {
   }
 };

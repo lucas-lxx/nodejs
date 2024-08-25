@@ -2,13 +2,15 @@ const Product = require('../models/product');
 const Cart = require('../models/cart');
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll((products) => {
+  Product.fetchAll()
+  .then(([rows, metaData]) => {
     res.render('shop/product-list', {
-      products, 
+      products: rows,
       pageTitle: 'CatShop.com',
       path: '/products'
     });
-  });
+  })
+  .catch(err => { console.log(err); });
 };
 
 exports.getProduct = (req, res, next) => {
@@ -23,13 +25,15 @@ exports.getProduct = (req, res, next) => {
 }
 
 exports.getHome = (req, res, next) => {
-  Product.fetchAll( products => {
+  Product.fetchAll()
+  .then(([rows, _]) => {
     res.render('shop/index', {
-      products,
+      products: rows,
       pageTitle: 'CatShop.com', 
       path: '/'
-    });}
-  );
+    });
+  })
+  .catch(err => { console.log(err); });
 }
 
 exports.getCart = (req, res, next) => {
