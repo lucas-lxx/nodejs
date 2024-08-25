@@ -20,11 +20,10 @@ const getProductsFromFile = (cb) => {
 };
 
 module.exports = class Product{
-  constructor(title, imageUrl, description, price, uuid=null) {
-    this.uuid = uuid;
+  constructor(title, image_url, description, price) {
     this.title = title;
-    this.imageUrl = imageUrl;
-    if (!imageUrl) this.imageUrl = 'https://preview.redd.it/toea7o9mmk481.jpg?width=1080&crop=smart&auto=webp&s=ff47ea91395dacbc8eb8a214a63d7f1d3e1b307a';
+    this.image_url = image_url;
+    if (!image_url) this.image_url = 'https://preview.redd.it/toea7o9mmk481.jpg?width=1080&crop=smart&auto=webp&s=ff47ea91395dacbc8eb8a214a63d7f1d3e1b307a';
     this.description = description;
     this.price = price;
   }
