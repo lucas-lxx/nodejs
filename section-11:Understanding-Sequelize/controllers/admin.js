@@ -10,21 +10,17 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const { title, image_url, description, price } = req.body;
-  const requiredFields = { title, description, price };
-  let invalidFieldSize = false;
-  for (const [key, value] of Object.entries(requiredFields)) {
-    if (value.length < 1) {
-      invalidFieldSize = true;
-    }
-  }
-  if (invalidFieldSize) {
+  Product.create({
+    title,
+    image_url,
+    price,
+    description
+  })
+  .then(result => { 
+    console.log(result); 
     res.redirect('/admin/add-product');
-  } else {
-    const product = new Product(title, image_url, description, price);
-    product.save()
-    .then(() => { res.redirect('/products'); })
-    .catch(err => { console.log(err); });
-  }
+  })
+  .catch(err => { console.log(err); });
 };
 
 exports.getEditProduct = (req, res, next) => {
