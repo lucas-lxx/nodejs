@@ -27,7 +27,7 @@ exports.getProduct = (req, res, next) => {
   .catch(err => { console.log(err); });
 }
 
-exports.getHome = (req, res, next) => {
+exports.getIndex = (req, res, next) => {
   Product.fetchAll()
   .then(([rows, _]) => {
     res.render('shop/index', {
