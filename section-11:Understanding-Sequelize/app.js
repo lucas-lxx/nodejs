@@ -5,10 +5,12 @@ const admin_router = require('./routes/admin');
 const shop_router = require('./routes/shop');
 const errorController = require('./controllers/error');
 const { public_dir_path } = require('./util/path');
+const sequelize = require('./util/database');
 
 const port = 3000;
 
 const app = express();
+
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
@@ -19,4 +21,10 @@ app.use('/', shop_router);
 app.use('/admin', admin_router);
 app.use(errorController.get404);
 
-app.listen(port, '0.0.0.0');
+sequelize.sync()
+.then(result => {
+    app.listen(port, '0.0.0.0');
+})
+.catch(err => { 
+    console.log(err); 
+});
