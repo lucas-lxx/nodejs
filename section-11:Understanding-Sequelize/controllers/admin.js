@@ -63,12 +63,10 @@ exports.postEditProduct = (req, res, next) => {
 }
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll((products) => {
-  })
-  Product.fetchAll()
-  .then(([rows, _]) => {
+  Product.findAll()
+  .then(products => {
     res.render('admin/products', {
-      products: rows,
+      products: products,
       pageTitle: 'Product Panel',
       path: '/admin/products'
     });
