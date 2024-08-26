@@ -1,13 +1,14 @@
 
 <%- include('../includes/head.ejs') %>
+  <link rel="stylesheet" href="/css/product.css">
 </head>
 <%- include('../includes/navigation.ejs') %>
 <body>
   <main class="centered">
     <h1><%= product.title %></h1>
     <hr>
-    <div>
-      <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+    <div class="card__image">
+      <img src="<%= product.image_url %>" alt="<%= product.title %>">
     </div>
     <h2>R$ <%= product.price %></h2>
     <p><%= product.description %></p>

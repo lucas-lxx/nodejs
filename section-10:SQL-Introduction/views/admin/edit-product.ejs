@@ -17,11 +17,11 @@
         <input type="text" name="title" id="title" <% if (edit) { %> value="<%= product.title %>"<% } %>>
       </div>
       <div class="form-control">
-        <label for="imageUrl">ImageUrl</label>
-        <input type="text" name="imageUrl" id="imageUrl" <% if (edit) { %>value="<%= product.imageUrl %>"<% } %>>
+        <label for="image_url">Image Url</label>
+        <input type="text" name="image_url" id="image_url" <% if (edit) { %>value="<%= product.image_url %>"<% } %>>
       </div>
       <% if (edit) { %>
-        <img src="<%= product.imageUrl %>" alt="<%= product.title %>" style="max-width: 14rem;">
+        <img src="<%= product.image_url %>" alt="<%= product.title %>" style="max-width: 14rem;">
       <% } %>
       <div class="form-control">
         <label for="price">Price</label>
