@@ -1,5 +1,4 @@
 const {DataTypes} = require('sequelize');
-const crypto = require('crypto');
 
 
 const sequelize = require('../util/database');
