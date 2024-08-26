@@ -1,48 +1,33 @@
+const {DataTypes} = require('sequelize');
 const crypto = require('crypto');
 
-const db = require('../util/database');
 
-module.exports = class Product{
-  constructor(title, image_url, description, price) {
-    this.title = title;
-    this.image_url = image_url;
-    if (!image_url) this.image_url = 'https://preview.redd.it/toea7o9mmk481.jpg?width=1080&crop=smart&auto=webp&s=ff47ea91395dacbc8eb8a214a63d7f1d3e1b307a';
-    this.description = description;
-    this.price = price;
+const sequelize = require('../util/database');
+
+const Products = sequelize.define('products', {
+  id: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    defaultValue: DataTypes.UUIDV1,
+    unique: true,
+    primaryKey: true
+  },
+  title: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  image_url: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: "https://preview.redd.it/toea7o9mmk481.jpg?width=1080&crop=smart&auto=webp&s=ff47ea91395dacbc8eb8a214a63d7f1d3e1b307a"
+  },
+  price: {
+    type: DataTypes.DOUBLE,
+    allowNull: false
+  },
+  description: {
+    type: DataTypes.STRING,
   }
+})
 
-  save() {
-    this.id = crypto.randomUUID();
-    return db.execute(`
-      INSERT INTO products (id, title, price, description, image_url)
-      VALUES (?, ?, ?, ?, ?);
-    `,
-    [this.id, this.title, this.price, this.description, this.image_url]);
-  };
-
-  static deleteById(id) {
-    return db.execute(`
-      DELETE FROM products
-      WHERE id=?;
-    `, [id]);
-  };
-
-  static deleteByTitle(title) {
-  };
-
-  static fetchAll() {
-    return db.execute(`
-      SELECT *
-      FROM products;
-    `);
-  }
-  
-  static findById(id) {
-    return db.execute(`
-      SELECT *
-      FROM products
-      WHERE id=?
-    `,
-    [id]);
-  }
-};
+module.exports = Products;
