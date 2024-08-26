@@ -28,10 +28,9 @@ exports.getEditProduct = (req, res, next) => {
   if (!edit) {
     return res.redirect('/');
   }
-  Product.findById(productId)
-  .then(([rows, _]) => {
-    const row = rows[0];
-    if (!row) {
+  Product.findByPk(productId)
+  .then(product => {
+    if (!product) {
       console.log('No product Found!');
       return res.redirect('error');
     }
@@ -39,7 +38,7 @@ exports.getEditProduct = (req, res, next) => {
       pageTitle: 'Edit Product', 
       path: '/admin/edit-product',
       edit: edit,
-      product: row
+      product: product 
     });
   })
   .catch(err => { console.log(err); });
