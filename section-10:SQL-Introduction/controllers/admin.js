@@ -44,9 +44,10 @@ exports.getEditProduct = (req, res, next) => {
       pageTitle: 'Edit Product', 
       path: '/admin/edit-product',
       edit: edit,
-      product
+      product: row
     });
-  });
+  })
+  .catch(err => { console.log(err); });
 };
 
 exports.postEditProduct = (req, res, next) => {

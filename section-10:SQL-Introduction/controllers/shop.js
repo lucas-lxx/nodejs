@@ -14,14 +14,17 @@ exports.getProducts = (req, res, next) => {
 };
 
 exports.getProduct = (req, res, next) => {
-  const productUuid = req.params.productUuid;
-  Product.findById(productUuid, product => {
+  const productId = req.params.productId;
+  Product.findById(productId)
+  .then(([rows, _]) => {
+    const row = rows[0];
     res.render('shop/product-details', {
-      product,
-      pageTitle: product.title,
+      product: row,
+      pageTitle: row.title,
       path: '/products'
     });
-  });
+  })
+  .catch(err => { console.log(err); });
 }
 
 exports.getHome = (req, res, next) => {
@@ -48,11 +51,14 @@ exports.getCart = (req, res, next) => {
 };
 
 exports.postCart = (req, res, next) => {
-  const productUuid = req.body.productUuid
-  Product.findById(productUuid, product => {
-    Cart.addProduct(product.id, product.price);
+  const productId = req.body.productId
+  Product.findById(productId)
+  .then(([rows, _]) => {
+    const row = rows[0];
+    Cart.addProduct(row.id, row.price);
     res.redirect('/cart');
   })
+  .catch(err => { console.log(err); });
 }
 
 exports.postCartDeleteProduct = (req, res, next) => {
