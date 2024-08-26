@@ -1,0 +1,13 @@
+<%- include('../includes/head.ejs') %>
+  <link rel="stylesheet" href="/css/product.css">
+</head>
+<%- include('../includes/navigation.ejs') %>
+<main>
+<% if (products) { %>
+  <div class="grid">
+    <%- include('../components/product-card.ejs') %>
+  </div>
+<% } else { %>
+  <div>nothing to see here...</div>
+<% } %>
+<%- include('../includes/end.ejs') %>

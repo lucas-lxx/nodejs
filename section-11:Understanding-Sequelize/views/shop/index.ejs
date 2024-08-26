@@ -1,0 +1,21 @@
+<%- include('../includes/head.ejs')%>
+  <link rel="stylesheet" href="/css/home.css">
+  <% if (products.length > 0) { %>
+    <link rel="stylesheet" href="/css/product.css">
+  <% } %>
+
+</head>
+<body>
+  <%- include('../includes/navigation.ejs')%>
+  <main class="home-main">
+    <div class="home-main__card">
+      <h1 class="home-main__title">CatShop.com</h1>
+      <p class="home-main__description">The best cat shop that you can find!</p>
+    </div>
+  </main>
+  <% if (products.length > 0) { %>
+    <div class="grid">
+      <%- include('../components/product-card.ejs', {products}) %>
+    </div>
+  <% } %>
+<%- include('../includes/end.ejs') %>
