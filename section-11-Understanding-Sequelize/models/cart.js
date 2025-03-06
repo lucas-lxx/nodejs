@@ -39,6 +39,7 @@ module.exports = class Cart {
     getCart(cb);
   }
 
+
   static deleteById(id, cb) {
     getCart(cart => {
       const deletedProductIndex = cart.products.findIndex(product => product.id === id);
