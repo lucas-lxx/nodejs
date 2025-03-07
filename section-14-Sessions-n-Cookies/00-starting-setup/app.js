@@ -35,7 +35,7 @@ app.use(errorController.get404);
 mongoose
   .connect(
     // 'mongodb://maximilian:asdffdsa@mongodb:21017',
-    'mongodb://maximilian:asdffdsa@mongoo:21017/shop?retryWrites=true',
+    `mongodb://${process.env.MONGO_INITDB_ROOT_USERNAME}:${process.env.MONGO_INITDB_ROOT_PASSWORD}@localhost:21017/${process.env.MONGO_INITDB_DATABASE}?retryWrites=true`,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,

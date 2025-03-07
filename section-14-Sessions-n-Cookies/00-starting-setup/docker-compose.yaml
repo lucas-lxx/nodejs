@@ -7,14 +7,16 @@ services:
         USER_ID: 1000
         GROUP_ID: 1000
     volumes:
-      - "/home/lucas/projects/nodejs/section-14-Sessions-&-Cookies/00-starting-setup:/app:cached"
+      - ".:/app:cached"
     stdin_open: true
     tty: true
   mongodb:
-    image: mongo
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: maximilian
-      MONGO_INITDB_ROOT_PASSWORD: asdffdsa
+    build: 
+      context: .
+      dockerfile: dockerfiles/mongo.dockerfile
+    env_file:
+      - "env/mongo.env"
+    network_mode: "host"
     ports:
     - "27017:27017"
     volumes:
@@ -24,9 +26,12 @@ services:
       context: .
       dockerfile: "dockerfiles/section-14.dockerfile"
     volumes:
-      - "/home/lucas/projects/nodejs/section-14-Sessions-&-Cookies/00-starting-setup:/app:cached"
+      - ".:/app:cached"
     ports:
       - "3000:3000"
+    env_file:
+      - "env/mongo.env"
+    network_mode: "host"
     depends_on:
       - mongodb
 volumes:
