@@ -20,8 +20,10 @@ app.set('views', 'views');
 app.use(body_parser.urlencoded({extended: true}));
 app.use(express.static(public_dir_path));
 
+const user_id_for_gambiarra = 'ad245720-0a65-11f0-9b58-25a4ffff91f2';
+
 app.use((req, res, next) => {
-  User.findByPk('06006ac0-05dc-11f0-93f3-3f425e5ae301')
+  User.findByPk(user_id_for_gambiarra)
   .then(user => {
     req.user = user;
     next();
@@ -44,7 +46,7 @@ Product.belongsToMany(User, { through: CartItem });
 // sequelize.sync({force: true})
 sequelize.sync()
 .then(result => {
-  return User.findByPk('06006ac0-05dc-11f0-93f3-3f425e5ae301');
+  return User.findByPk(user_id_for_gambiarra);
 })
 .then(user => {
   if (!user) return User.create({ name: 'Lucas', email: 'test@test.com'})

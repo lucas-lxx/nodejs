@@ -1,6 +1,4 @@
-const { raw } = require('mysql2');
 const Product = require('../models/product');
-const { json, where } = require('sequelize');
 
 exports.getAddProduct = async (req, res, next) => {
   res.render('admin/edit-product', {
@@ -14,8 +12,8 @@ exports.postAddProduct = async (req, res, next) => {
   let { title, image_url, description, price } = req.body;
   console.log(req.body);
   if (image_url === '') image_url = "https://preview.redd.it/toea7o9mmk481.jpg?width=1080&crop=smart&auto=webp&s=ff47ea91395dacbc8eb8a214a63d7f1d3e1b307a";
-  // req.user.createProduct({
-  Product.create({
+  req.user.createProduct({
+  // Product.create({
     title,
     image_url,
     price,
