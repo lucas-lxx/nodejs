@@ -5,13 +5,15 @@
 <%- include('../includes/navigation.ejs') %>
 <body>
   <main class="centered">
-    <h1><%= product.title %></h1>
-    <hr>
-    <div class="card__image">
-      <img src="<%= product.image_url %>" alt="<%= product.title %>">
+    <div>
+      <h1><%= product.title %></h1>
+      <hr>
+      <div class="card__image">
+        <img src="<%= product.image_url %>" alt="<%= product.title %>">
+      </div>
+      <h2>R$ <%= product.price %></h2>
+      <p><%= product.description %></p>
+      <%- include('../includes/add-to-cart.ejs', product) %>
     </div>
-    <h2>R$ <%= product.price %></h2>
-    <p><%= product.description %></p>
-    <%- include('../includes/add-to-cart.ejs', product) %>
   </main>
 <%- include('../includes/end.ejs') %>

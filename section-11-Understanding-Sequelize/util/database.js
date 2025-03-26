@@ -1,8 +1,8 @@
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(
-    'finance',
-    'financier',
+    process.env.POSTGRES_DB,
+    process.env.POSTGRES_USER,
     'asdffdsa',
     {
         dialect: 'postgres',

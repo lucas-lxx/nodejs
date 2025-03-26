@@ -11,7 +11,9 @@
     </div>
     <div class="card__content">
       <h2 class="product__price">R$ <%= product.price %></h2>
-      <p class="product__description"><%= product.description %></p>
+      <% if(path.match(new RegExp("^/products/.*"))) { %>
+        <p class="product__description"><%= product.description %></p>
+      <% }; %>
     </div>
     <div class="card__actions">
 
