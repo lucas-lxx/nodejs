@@ -45,7 +45,7 @@ sequelize.sync()
   return user;
 })
 .then(user => {
-  console.log(`\x1b[35mUser: ${user}\x1b[0m`)
+  console.log(`User: ${JSON.stringify(user, null, 2)}`)
   app.listen(process.env.PORT, process.env.HOST);
   console.log(`app listening on ${process.env.PORT}`)
 })
