@@ -17,15 +17,31 @@ app.set('views', 'views');
 app.use(body_parser.urlencoded({extended: true}));
 app.use(express.static(public_dir_path));
 
+app.use((req, res, next) => {
+  User.findByPk('06006ac0-05dc-11f0-93f3-3f425e5ae301')
+  .then(user => {
+    req.user = user;
+    next();
+  })
+})
+
 app.use('/', shop_router);
 app.use('/admin', admin_router);
 app.use(errorController.get404);
 
 sequelize.sync()
 .then(result => {
-    app.listen(port, '0.0.0.0');
-    console.log(`app listening on ${port}`)
+  return User.findByPk('06006ac0-05dc-11f0-93f3-3f425e5ae301');
+})
+.then(user => {
+  if (!user) return User.create({ name: 'Lucas', email: 'test@test.com'})
+  return user;
+})
+.then(user => {
+  console.log(`\x1b[35mUser: ${user}\x1b[0m`)
+  app.listen(process.env.PORT, process.env.HOST);
+  console.log(`app listening on ${process.env.PORT}`)
 })
 .catch(err => { 
-    console.log(err); 
+  console.log(err);
 });
