@@ -1,0 +1,11 @@
+<h1>Products</h1>
+<%if (products.length > 0) {%>
+  <div class="grid">
+    <%- include('../components/product-card.ejs', {products}) %>
+  </div>
+<% } else { %>
+  <div>
+    <p>Nothing to see here...</p>
+    <img src="https://http.cat/206" alt="Page under construction" style="width: 300px; height: auto;">
+  </div>
+<% } %>

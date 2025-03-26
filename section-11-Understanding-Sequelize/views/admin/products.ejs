@@ -3,11 +3,6 @@
 </head>
 <%- include('../includes/navigation.ejs') %>
 <main>
-<% if (products) { %>
-  <div class="grid">
-    <%- include('../components/product-card.ejs') %>
-  </div>
-<% } else { %>
-  <div>nothing to see here...</div>
-<% } %>
+  <%- include('../includes/list-of-products.ejs') %>
+</main>
 <%- include('../includes/end.ejs') %>

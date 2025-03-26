@@ -4,18 +4,6 @@
 <body>
   <%- include('../includes/navigation.ejs')%>
   <main>
-    <h1>Products</h1>
-    <%if (products.length > 0) {%>
-      <div class="grid">
-
-        <%- include('../components/product-card.ejs', {products}) %>
-
-      </div>
-    <% } else { %>
-      <div>
-        <p>List of all the products...</p>
-        <img src="https://http.cat/206" alt="Page under construction" style="width: 300px; height: auto;">
-      </div>
-    <% } %>
+    <%- include('../includes/list-of-products.ejs') %>
   </main>
 <%- include('../includes/end.ejs') %>
