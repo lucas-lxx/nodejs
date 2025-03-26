@@ -1,32 +1,32 @@
-const {DataTypes} = require('sequelize');
-
+const Sequelize = require('sequelize');
 
 const sequelize = require('../util/database');
 
-const Products = sequelize.define('products', {
+const Product = sequelize.define('products', {
   id: {
-    type: DataTypes.UUID,
+    type: Sequelize.UUID,
     allowNull: false,
-    defaultValue: DataTypes.UUIDV1,
+    defaultValue: Sequelize.UUIDV1,
     unique: true,
     primaryKey: true
   },
   title: {
-    type: DataTypes.STRING,
+    type: Sequelize.STRING,
     allowNull: false
   },
   image_url: {
-    type: DataTypes.STRING,
+    type: Sequelize.STRING,
+    defaultValue: "https://preview.redd.it/toea7o9mmk481.jpg?width=1080&crop=smart&auto=webp&s=ff47ea91395dacbc8eb8a214a63d7f1d3e1b307a",
     allowNull: false,
-    defaultValue: "https://preview.redd.it/toea7o9mmk481.jpg?width=1080&crop=smart&auto=webp&s=ff47ea91395dacbc8eb8a214a63d7f1d3e1b307a"
   },
   price: {
-    type: DataTypes.DOUBLE,
+    type: Sequelize.DOUBLE,
     allowNull: false
   },
   description: {
-    type: DataTypes.STRING,
+    type: Sequelize.STRING,
   }
-})
+});
 
-module.exports = Products;
+
+module.exports = Product;
