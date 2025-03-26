@@ -7,7 +7,9 @@ const errorController = require('./controllers/error');
 const { public_dir_path } = require('./util/path');
 const sequelize = require('./util/database');
 
-const port = 3000;
+const User = require('./models/user');
+const Product = require('./models/product');
+const Cart = require('./models/cart');
 
 const app = express();
 
@@ -29,6 +31,11 @@ app.use('/', shop_router);
 app.use('/admin', admin_router);
 app.use(errorController.get404);
 
+Product.belongsTo(User, {constraints: true, onDelete: 'CASCADE'})
+User.hasMany(Product);
+
+
+// sequelize.sync({force: true})
 sequelize.sync()
 .then(result => {
   return User.findByPk('06006ac0-05dc-11f0-93f3-3f425e5ae301');
