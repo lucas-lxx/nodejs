@@ -34,12 +34,10 @@ app.use(errorController.get404);
 
 mongoose
   .connect(
-    // 'mongodb://maximilian:asdffdsa@mongodb:21017',
-    `mongodb://${process.env.MONGO_INITDB_ROOT_USERNAME}:${process.env.MONGO_INITDB_ROOT_PASSWORD}@localhost:21017/${process.env.MONGO_INITDB_DATABASE}?retryWrites=true`,
+    `mongodb+srv://${process.env.MONGO_INITDB_ROOT_USERNAME}:${process.env.MONGO_INITDB_ROOT_PASSWORD}@cluster0.d7xxp.mongodb.net/shop?retryWrites=true&w=majority&appName=Cluster0`,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      authSource: 'admin'
     }
   )
   .then(result => {

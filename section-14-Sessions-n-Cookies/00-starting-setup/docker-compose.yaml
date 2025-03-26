@@ -10,17 +10,6 @@ services:
       - ".:/app:cached"
     stdin_open: true
     tty: true
-  mongodb:
-    build: 
-      context: .
-      dockerfile: dockerfiles/mongo.dockerfile
-    env_file:
-      - "env/mongo.env"
-    network_mode: "host"
-    ports:
-    - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
   section-14:
     build:
       context: .
@@ -31,8 +20,3 @@ services:
       - "3000:3000"
     env_file:
       - "env/mongo.env"
-    network_mode: "host"
-    depends_on:
-      - mongodb
-volumes:
-  mongo-data:
