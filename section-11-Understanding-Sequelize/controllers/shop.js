@@ -1,7 +1,7 @@
 const Product = require('../models/product');
 const Cart = require('../models/cart');
+const { where } = require('sequelize');
 
-const { Sequelize } = require('sequelize');
 
 exports.getProducts = async (req, res, next) => {
   Product.findAll({raw: true})
@@ -41,74 +41,112 @@ exports.getIndex = async (req, res, next) => {
 }
 
 exports.getCart = async (req, res, next) => {
-  // Cart.findAll({raw: true})
-  // .then(async cart => {
-  //   console.log(cart);
-  //   res.render('shop/cart', {
-  //     pageTitle: 'CatShop Cart',
-  //     path: '/cart',
-  //     products: cart,
-  //     totalPrice: 99
-  //   });
-  // })
-  //Cart.findAll({
-
-  // Cart.findAll({
-  //   raw: true,
-  //   include: [{
-  //     model: Product,  // Assuming a Product model is associated with Cart
-  //     attributes: ['price']  // We need the price of each product
-  //   }]
-  // })
-  // .then(async cart => {
-  //   console.log(cart);
-
-  //   // Calculate total price in JavaScript
-  //   const totalPrice = cart.reduce((sum, item) => sum + item['Product.price'], 0);  // Assuming the join adds 'Product.price'
-
-  //   res.render('shop/cart', {
-  //     pageTitle: 'CatShop Cart',
-  //     path: '/cart',
-  //     products: cart,
-  //     totalPrice: totalPrice  // Use calculated total price
-  //   });
+  // req.user.getCart()
+  // .then(cart => {
+  //   return cart.getProducts()
+  //   .then(products => {
+  //     res.render('shop/cart', {
+  //       pageTitle: 'CatShop Cart',
+  //       path: '/cart',
+  //       products: products,
+  //       totalPrice: totalPrice  // Use calculated total price
+  //     });
+  //   })
+  //   .catch(err => console.log(err));
   // })
   // .catch(err => console.log(err));
 
-  Cart.findAll({
-    raw: true,
-    include: [{
-      model: Product,  // Assuming you have a Product model related to Cart
-      attributes: []   // We don't need Product details in the result
-    }],
-    attributes: [
-      [Sequelize.fn('SUM', Sequelize.col('Product.price')), 'totalPrice']  // Calculate total price
-    ],
-    group: ['Cart.id']
+  req.user.getCart()
+  .then(cart => {
+    // console.log(JSON.stringify(cart, null, 2));
+    cart.getProducts()
+    .then(products => {
+      // console.log("==============products==============");
+      // console.log(products);
+      // console.log("==============products==============");
+      let sum = 0;
+      // console.log("==============products inside the cart==============");
+      // for (let i = 0; i < products.length; i++) {
+      //   // const sum = sum + products[i].price;
+      //   console.log(products[i]); 
+      // }
+      // console.log("==============products inside the cart==============");
+      res.render('shop/cart', {
+        pageTitle: 'CatShop Cart',
+        path: '/cart',
+        products: products,
+        totalPrice: sum  // Use calculated total price
+      });
+    })
+    .catch(e => console.log(e));
   })
-  .then(async cart => {
-    console.log(cart);  // [{ totalPrice: 123.45 }]
-    // res.render('shop/cart', {
-    //   pageTitle: 'CatShop Cart',
-    //   path: '/cart',
-    //   products: ,
-    //   totalPrice: cart[0].totalPrice  // Access the calculated totalPrice
-    // });
-    res.send('ok!');
-  })
-  .catch(err => console.log(err));
-
+  .catch(e => console.log(e));
 
 };
 
-exports.postCart = (req, res, next) => {
+exports.postCart = async (req, res, next) => {
+  // const productId = req.body.productId
+  // req.user.getCart()
+  // .then(cart => {
+  //   cart.getProducts({where: { id: productId}})
+  //   .then(products => {
+  //     console.log('==========');
+  //     console.log(products);
+  //     console.log('==========');
+  //     prod = products[0];
+  //     console.log(products);
+  //     if (!prod) {
+  //       Product.findByPk(productId, {raw: true})
+  //       .then(prod => {
+  //         console.log('==========');
+  //         console.log("prod: ", prod);
+  //         console.log('==========');
+  //         cart.createProduct(prod.prod);
+  //         return
+  //       })
+  //     }
+  //     prod.quantity += 1;
+  //     prod.save();
+  //     res.redirect('/cart');
+  //   })
+  //   .catch(err => { console.log(err); });
+  // })
+  // .catch(err => { console.log(err); });
+
   const productId = req.body.productId
-  Product.findByPk(productId)
-  .then(product => {
-    Cart.create({product_id: productId, quantity: (product.quantity += 1)})
+  let fetchedCart;
+
+  req.user.getCart()
+  .then(cart => {
+    fetchedCart = cart;
+    return fetchedCart.getProducts({where: { id: productId } });
+  })
+  .then(products => {
+    let product;
+    if (products) {
+      product = products[0];
+    }
+    let newQuantity = 1;
+    if (product) {
+      // console.log("===asdf=======");
+      // console.log("product: ", product);
+      // console.log("quantity: ", product.cartItem.quantity);
+      // console.log("===asdf=======");
+      // product.cartItem.quantity += 1;
+      // product.cartItem.save();
+      // return
+    }
+    Product.findByPk(productId)
+    .then(product => {
+      console.log("product: ",product);
+      return fetchedCart.addProduct(product, { through: { quantity: newQuantity }});
+    })
+    .catch(e => console.log(e));
+  })
+  .then(() => {
     res.redirect('/cart');
   })
-  .catch(err => { console.log(err); });
+  .catch(e => console.log(e));
 }
 
 exports.postCartDeleteProduct = (req, res, next) => {
